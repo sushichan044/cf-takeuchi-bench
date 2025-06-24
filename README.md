@@ -1,16 +1,24 @@
-```txt
-npm install
-npm run dev
+# Cloudflare Takeuchi Benchmark
+
+A Cloudflare Workers application that benchmarks the Takeuchi function implementation in TypeScript vs Go using Cloudflare Containers.
+
+## Development
+
+```bash
+pnpm install
+pnpm dev
 ```
 
-```txt
-npm run deploy
+## Deployment
+
+```bash
+pnpm deploy
 ```
 
 [For generating/synchronizing types based on your Worker configuration run](https://developers.cloudflare.com/workers/wrangler/commands/#types):
 
-```txt
-npm run cf-typegen
+```bash
+pnpm cf-typegen
 ```
 
 Pass the `CloudflareBindings` as generics when instantiation `Hono`:
@@ -19,3 +27,118 @@ Pass the `CloudflareBindings` as generics when instantiation `Hono`:
 // src/index.ts
 const app = new Hono<{ Bindings: CloudflareBindings }>()
 ```
+
+## HTTP API
+
+### GET /
+
+Simple health check endpoint.
+
+**Response:**
+
+```
+Hello Hono!
+```
+
+### POST /takeuchi/ts
+
+Execute the Takeuchi function using native TypeScript implementation.
+
+**Request Body:**
+
+```json
+{
+  "x": number,
+  "y": number,
+  "z": number
+}
+```
+
+**Response:**
+
+```json
+{
+  "executionTimeMs": number,
+  "isError": false,
+  "result": number
+}
+```
+
+**Error Response:**
+
+```json
+{
+  "executionTimeMs": number,
+  "isError": true,
+  "message": string
+}
+```
+
+### POST /takeuchi/go
+
+Execute the Takeuchi function using containerized Go implementation.
+
+**Request Body:**
+
+```json
+{
+  "x": number,
+  "y": number,
+  "z": number
+}
+```
+
+**Response:**
+
+```json
+{
+  "executionTimeMs": number,
+  "isError": false,
+  "result": number
+}
+```
+
+**Error Response:**
+
+```json
+{
+  "executionTimeMs": number,
+  "isError": true,
+  "message": string
+}
+```
+
+### Notes
+
+- Both endpoints have a 2-minute timeout
+- Execution time is measured in milliseconds
+- The Takeuchi function is computationally expensive; use small values for testing
+- Example request: `{"x": 3, "y": 2, "z": 1}`
+
+## Sample Benchmark Result
+
+### On Local (`wrangler dev`)
+
+```bash
+$ curl -X POST http://localhost:8787/takeuchi/ts \
+  -H "Content-Type: application/json" \
+  -d '{
+    "x": 28,
+    "y": 15,
+    "z": 13
+  }'
+{"executionTimeMs":4227,"isError":false,"result":28}
+
+$ curl -X POST http://localhost:8787/takeuchi/go \
+  -H "Content-Type: application/json" \
+  -d '{
+    "x": 28,
+    "y": 15,
+    "z": 13
+  }'
+{"executionTimeMs":17562.2523,"isError":false,"result":28}
+```
+
+### On Cloudflare Workers Runtime
+
+not released yet
