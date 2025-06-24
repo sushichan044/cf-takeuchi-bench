@@ -1,0 +1,38 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cf-takeuchi-bench",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-06-24",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "containers": [
+    {
+      "name": "go-executor",
+      "max_instances": 10,
+      "class_name": "GoExecutor",
+      "configuration": {
+        "disk": {
+          "size": "1G"
+        },
+        "image": "./containers/go.Dockerfile"
+      }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "GoExecutor",
+        "name": "GO_EXECUTOR"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": ["GoExecutor"],
+      "tag": "v1"
+    }
+  ]
+}
