@@ -17,14 +17,16 @@
       "max_instances": 10,
       "class_name": "GoExecutor",
       "image": "./containers/go.Dockerfile",
-      "image_build_context": "./containers"
+      "image_build_context": "./containers",
+      "instance_type": "basic"
     },
     {
       "name": "node-executor",
       "max_instances": 10,
       "class_name": "NodeExecutor",
       "image": "./containers/node.Dockerfile",
-      "image_build_context": "./containers"
+      "image_build_context": "./containers",
+      "instance_type": "basic"
     }
   ],
   "durable_objects": {
