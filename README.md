@@ -61,7 +61,7 @@ Execute the Takeuchi function using native TypeScript implementation.
 
 **Request Body:**
 
-```json
+```ts
 {
   "x": number,
   "y": number,
@@ -71,7 +71,7 @@ Execute the Takeuchi function using native TypeScript implementation.
 
 **Response:**
 
-```json
+```ts
 {
   "executionTimeMs": number,
   "isError": false,
@@ -81,7 +81,7 @@ Execute the Takeuchi function using native TypeScript implementation.
 
 **Error Response:**
 
-```json
+```ts
 {
   "executionTimeMs": number,
   "isError": true,
@@ -95,7 +95,7 @@ Execute the Takeuchi function using containerized Go implementation.
 
 **Request Body:**
 
-```json
+```ts
 {
   "x": number,
   "y": number,
@@ -105,7 +105,7 @@ Execute the Takeuchi function using containerized Go implementation.
 
 **Response:**
 
-```json
+```ts
 {
   "executionTimeMs": number,
   "isError": false,
@@ -115,7 +115,7 @@ Execute the Takeuchi function using containerized Go implementation.
 
 **Error Response:**
 
-```json
+```ts
 {
   "executionTimeMs": number,
   "isError": true,
