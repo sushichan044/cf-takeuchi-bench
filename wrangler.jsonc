@@ -18,7 +18,8 @@
           "size": "1G"
         },
         "image": "./containers/go.Dockerfile"
-      }
+      },
+      "image_build_context": "./containers"
     },
     {
       "name": "node-executor",
@@ -29,7 +30,8 @@
           "size": "1G"
         },
         "image": "./containers/node.Dockerfile"
-      }
+      },
+      "image_build_context": "./containers"
     }
   ],
   "durable_objects": {
