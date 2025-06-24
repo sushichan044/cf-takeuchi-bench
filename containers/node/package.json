@@ -1,0 +1,12 @@
+{
+  "name": "@repo/takeuchi-node",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Node.js implementation of Takeuchi function for benchmarking",
+  "dependencies": {
+    "@hono/node-server": "1.14.4",
+    "@hono/standard-validator": "0.1.2",
+    "hono": "4.8.2",
+    "valibot": "1.1.0"
+  }
+}

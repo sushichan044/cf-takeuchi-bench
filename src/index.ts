@@ -99,7 +99,48 @@ app.post(
   },
 );
 
-app.post("/takeuchi/ts", sValidator("json", takeuchiRequestSchema), (c) => {
+app.post(
+  "/takeuchi/node",
+  sValidator("json", takeuchiRequestSchema),
+  async (c) => {
+    const body = c.req.valid("json");
+    const nodeExecutor = await getRandom(c.env.NODE_EXECUTOR);
+
+    const response = await nodeExecutor.fetch("http://localhost:8080", {
+      body: JSON.stringify(body),
+      method: "POST",
+    });
+
+    const parsed = await v.safeParseAsync(
+      takeuchiResponseSchema,
+      await response.json(),
+    );
+    if (!parsed.success) {
+      return c.json(
+        {
+          executionTimeMs: -1,
+          isError: true,
+          message: "Invalid response from Node executor",
+        } satisfies TakeuchiResponse,
+        500,
+      );
+    }
+    if (parsed.output.isError) {
+      return c.json(
+        {
+          executionTimeMs: parsed.output.executionTimeMs,
+          isError: true,
+          message: parsed.output.message,
+        } satisfies TakeuchiResponse,
+        500,
+      );
+    }
+
+    return c.json(parsed.output satisfies TakeuchiResponse);
+  },
+);
+
+app.post("/takeuchi/workerd", sValidator("json", takeuchiRequestSchema), (c) => {
   const body = c.req.valid("json");
 
   const start = performance.now();
@@ -114,6 +155,6 @@ app.post("/takeuchi/ts", sValidator("json", takeuchiRequestSchema), (c) => {
   } satisfies TakeuchiResponse);
 });
 
-export { GoExecutor } from "./containers";
+export { GoExecutor, NodeExecutor } from "./containers";
 
 export default app;

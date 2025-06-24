@@ -19,6 +19,17 @@
         },
         "image": "./containers/go.Dockerfile"
       }
+    },
+    {
+      "name": "node-executor",
+      "max_instances": 10,
+      "class_name": "NodeExecutor",
+      "configuration": {
+        "disk": {
+          "size": "1G"
+        },
+        "image": "./containers/node.Dockerfile"
+      }
     }
   ],
   "durable_objects": {
@@ -26,6 +37,10 @@
       {
         "class_name": "GoExecutor",
         "name": "GO_EXECUTOR"
+      },
+      {
+        "class_name": "NodeExecutor",
+        "name": "NODE_EXECUTOR"
       }
     ]
   },
@@ -33,6 +48,10 @@
     {
       "new_sqlite_classes": ["GoExecutor"],
       "tag": "v1"
+    },
+    {
+      "new_sqlite_classes": ["NodeExecutor"],
+      "tag": "v2"
     }
   ]
 }
