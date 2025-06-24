@@ -13,24 +13,14 @@
       "name": "go-executor",
       "max_instances": 10,
       "class_name": "GoExecutor",
-      "configuration": {
-        "disk": {
-          "size": "1G"
-        },
-        "image": "./containers/go.Dockerfile"
-      },
+      "image": "./containers/go.Dockerfile",
       "image_build_context": "./containers"
     },
     {
       "name": "node-executor",
       "max_instances": 10,
       "class_name": "NodeExecutor",
-      "configuration": {
-        "disk": {
-          "size": "1G"
-        },
-        "image": "./containers/node.Dockerfile"
-      },
+      "image": "./containers/node.Dockerfile",
       "image_build_context": "./containers"
     }
   ],
