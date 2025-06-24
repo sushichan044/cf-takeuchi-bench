@@ -20,14 +20,14 @@ pnpm deploy
 ### On Local (`wrangler dev`)
 
 ```bash
-$ curl -X POST http://localhost:8787/takeuchi/ts \
+$ curl -X POST http://localhost:8787/takeuchi/workerd \
   -H "Content-Type: application/json" \
   -d '{
     "x": 28,
     "y": 15,
     "z": 13
   }'
-{"executionTimeMs":4227,"isError":false,"result":28}
+{"executionTimeMs":4421,"isError":false,"result":28}
 
 $ curl -X POST http://localhost:8787/takeuchi/go \
   -H "Content-Type: application/json" \
@@ -36,12 +36,32 @@ $ curl -X POST http://localhost:8787/takeuchi/go \
     "y": 15,
     "z": 13
   }'
-{"executionTimeMs":17562.2523,"isError":false,"result":28}
+{"executionTimeMs":17873.142174,"isError":false,"result":28}
 ```
 
 ### On Cloudflare Workers Runtime
 
-not released yet
+```bash
+$ curl -X POST http://localhost:8787/takeuchi/workerd \
+  -H "Content-Type: application/json" \
+  -d '{
+    "x": 28,
+    "y": 15,
+    "z": 13
+  }'
+{"executionTimeMs":0,"isError":false,"result":28}
+# In Workers runtime, timer does not work:https://developers.cloudflare.com/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading
+# CPU time from log: 12067 ms
+
+$ curl -X POST {HOST}/takeuchi/go \
+  -H "Content-Type: application/json" \
+  -d '{
+    "x": 28,
+    "y": 15,
+    "z": 13
+  }'
+{"executionTimeMs":17238.630046,"isError":false,"result":28}
+```
 
 ## HTTP API
 
