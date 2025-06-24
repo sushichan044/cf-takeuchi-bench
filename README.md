@@ -42,7 +42,7 @@ $ curl -X POST http://localhost:8787/takeuchi/go \
 ### On Cloudflare Workers Runtime
 
 ```bash
-$ curl -X POST http://localhost:8787/takeuchi/workerd \
+$ curl -X POST {HOST}/takeuchi/workerd \
   -H "Content-Type: application/json" \
   -d '{
     "x": 28,
