@@ -15,18 +15,33 @@ pnpm dev
 pnpm deploy
 ```
 
-[For generating/synchronizing types based on your Worker configuration run](https://developers.cloudflare.com/workers/wrangler/commands/#types):
+## Sample Benchmark Result of Takeuchi Function
+
+### On Local (`wrangler dev`)
 
 ```bash
-pnpm cf-typegen
+$ curl -X POST http://localhost:8787/takeuchi/ts \
+  -H "Content-Type: application/json" \
+  -d '{
+    "x": 28,
+    "y": 15,
+    "z": 13
+  }'
+{"executionTimeMs":4227,"isError":false,"result":28}
+
+$ curl -X POST http://localhost:8787/takeuchi/go \
+  -H "Content-Type: application/json" \
+  -d '{
+    "x": 28,
+    "y": 15,
+    "z": 13
+  }'
+{"executionTimeMs":17562.2523,"isError":false,"result":28}
 ```
 
-Pass the `CloudflareBindings` as generics when instantiation `Hono`:
+### On Cloudflare Workers Runtime
 
-```ts
-// src/index.ts
-const app = new Hono<{ Bindings: CloudflareBindings }>()
-```
+not released yet
 
 ## HTTP API
 
@@ -114,31 +129,3 @@ Execute the Takeuchi function using containerized Go implementation.
 - Execution time is measured in milliseconds
 - The Takeuchi function is computationally expensive; use small values for testing
 - Example request: `{"x": 3, "y": 2, "z": 1}`
-
-## Sample Benchmark Result
-
-### On Local (`wrangler dev`)
-
-```bash
-$ curl -X POST http://localhost:8787/takeuchi/ts \
-  -H "Content-Type: application/json" \
-  -d '{
-    "x": 28,
-    "y": 15,
-    "z": 13
-  }'
-{"executionTimeMs":4227,"isError":false,"result":28}
-
-$ curl -X POST http://localhost:8787/takeuchi/go \
-  -H "Content-Type: application/json" \
-  -d '{
-    "x": 28,
-    "y": 15,
-    "z": 13
-  }'
-{"executionTimeMs":17562.2523,"isError":false,"result":28}
-```
-
-### On Cloudflare Workers Runtime
-
-not released yet
