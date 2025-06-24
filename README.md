@@ -1,6 +1,6 @@
 # Cloudflare Takeuchi Benchmark
 
-A Cloudflare Workers application that benchmarks the Takeuchi function implementation in TypeScript vs Go using Cloudflare Containers.
+A Cloudflare Workers application that benchmarks the Takeuchi function implementation in pure workerd vs Go in Cloudflare Container.
 
 ## Development
 
